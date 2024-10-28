@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PocasiFrontEnd.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+
+        <VerticalStackLayout
+            Grid.Column="0"
+            Padding="15"
+            Spacing="10">
+            <Label FontSize="20" Text="Zeměpisná šířka:" />
+            <Entry x:Name="LatitudeEntry" Keyboard="Numeric" />
+            <Label FontSize="20" Text="Zeměpisná délka:" />
+            <Entry x:Name="LongitudeEntry" Keyboard="Numeric" />
+            <Button
+                x:Name="SubmitBtn"
+                Clicked="SubmitBtn_OnClicked"
+                Text="Zadat"
+                WidthRequest="100" />
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Column="1">
+            <VerticalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="60"
+                    HorizontalOptions="Center"
+                    Text="Počasí" />
+
+                <CollectionView
+                    x:Name="DayView"
+                    Margin="0,50"
+                    HorizontalOptions="Center"
+                    ItemsLayout="HorizontalList"
+                    SelectionChanged="DayView_OnSelectionChanged"
+                    SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Padding="25" WidthRequest="160">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Date}" />
+                                <Image
+                                    HeightRequest="75"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding IconPath}" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="30"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding MaxTemperature}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid HorizontalOptions="Center">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <VerticalStackLayout Grid.Column="0" HeightRequest="300">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="30"
+                            HorizontalOptions="Center"
+                            Text="Detaily" />
+                        <Label
+                            x:Name="TimeLabel"
+                            HorizontalOptions="Center"
+                            Text="Time: " />
+                        <Label
+                            x:Name="TemperatureLabel"
+                            HorizontalOptions="Center"
+                            Text="Temperature: " />
+                        <Image
+                            x:Name="CurrentImage"
+                            HeightRequest="200"
+                            HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <VerticalStackLayout Grid.Row="0" HeightRequest="150">
+                            <Label x:Name="sunriseLabel" Text="Východ slunce: " />
+                            <Image HeightRequest="100" Source="icon.png" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" HeightRequest="150">
+                            <Label x:Name="sunsetLabel" Text="Západ slunce: " />
+                            <Image HeightRequest="100" Source="icon.png" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
+
+</ContentPage>
