@@ -51,8 +51,8 @@ public partial class MainPage : ContentPage
             CurrentImage.Source = day.IconPath;
         }
 
-        sunriseLabel.Text = $"Východ slunce: {day.Sunrise}";
-        sunsetLabel.Text = $"Západ slunce: {day.Sunset}";
+        SunriseLabel.Text = $"Východ slunce: {day.Sunrise}";
+        SunsetLabel.Text = $"Západ slunce: {day.Sunset}";
     }
 
     private void SubmitBtn_OnClicked(object? sender, EventArgs e)

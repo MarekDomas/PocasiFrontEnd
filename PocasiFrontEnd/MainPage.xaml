@@ -10,33 +10,41 @@
             <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
-        <VerticalStackLayout
-            Grid.Column="0"
-            Padding="15"
-            Spacing="10">
-            <Label FontSize="20" Text="Název" />
-            <Entry x:Name="NameEntry" />
-            <Label FontSize="20" Text="Zeměpisná šířka:" />
-            <Entry x:Name="LatitudeEntry" Keyboard="Numeric" />
-            <Label FontSize="20" Text="Zeměpisná délka:" />
-            <Entry x:Name="LongitudeEntry" Keyboard="Numeric" />
-            <Button
-                x:Name="SubmitBtn"
-                Clicked="SubmitBtn_OnClicked"
-                Text="Zadat"
-                WidthRequest="100" />
+        <ScrollView>
+            <VerticalStackLayout
+                Grid.Column="0"
+                Padding="15"
+                Spacing="10">
+                <Label FontSize="20" Text="Název" />
+                <Entry x:Name="NameEntry" />
+                <Label FontSize="20" Text="Zeměpisná šířka:" />
+                <Entry x:Name="LatitudeEntry" Keyboard="Numeric" />
+                <Label FontSize="20" Text="Zeměpisná délka:" />
+                <Entry x:Name="LongitudeEntry" Keyboard="Numeric" />
+                <Button
+                    x:Name="SubmitBtn"
+                    Clicked="SubmitBtn_OnClicked"
+                    Text="Zadat"
+                    WidthRequest="100" />
 
-            <ListView
-                x:Name="PlacesListView"
-                ItemSelected="PlacesListView_OnItemSelected"
-                SelectionMode="Single">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </VerticalStackLayout>
+                <ListView
+                    x:Name="PlacesListView"
+                    ItemSelected="PlacesListView_OnItemSelected"
+                    SelectionMode="Single">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Name}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <ScrollView Grid.Column="1">
             <VerticalStackLayout>
@@ -93,6 +101,8 @@
                             Text="Time: " />
                         <Label
                             x:Name="TemperatureLabel"
+                            FontAttributes="Bold"
+                            FontSize="15"
                             HorizontalOptions="Center"
                             Text="Temperature: " />
                         <Image
@@ -106,11 +116,11 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <VerticalStackLayout Grid.Row="0" HeightRequest="150">
-                            <Label x:Name="sunriseLabel" Text="Východ slunce: " />
+                            <Label x:Name="SunriseLabel" Text="Východ slunce: " />
                             <Image HeightRequest="100" Source="icon.png" />
                         </VerticalStackLayout>
                         <VerticalStackLayout Grid.Row="1" HeightRequest="150">
-                            <Label x:Name="sunsetLabel" Text="Západ slunce: " />
+                            <Label x:Name="SunsetLabel" Text="Západ slunce: " />
                             <Image HeightRequest="100" Source="icon.png" />
                         </VerticalStackLayout>
                     </Grid>
@@ -118,8 +128,5 @@
 
             </VerticalStackLayout>
         </ScrollView>
-
     </Grid>
-
-
 </ContentPage>
