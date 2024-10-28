@@ -6,22 +6,28 @@ namespace PocasiFrontEnd;
 public partial class MainPage : ContentPage
 {
     public List<Day> Days = [];
+    public List<Place> Places = [new Place("Hradec Králové", "50.43340228879575", "15.352385419059253"), new Place("Praha", "50.0833", "14.4167"), new Place("Brno", "49.1952", "16.6084"), new Place("Ostrava", "49.8347", "18.2820"), new Place("Plzeň", "49.7475", "13.3777"), new Place("Liberec", "50.7671", "15.0562"), new Place("Olomouc", "49.5938", "17.2509")];
+
+    public Place selectedPlace;
     //Day day1 = new(DateTime.Now, 1, new Image(), 20);
     public MainPage()
     {
+        selectedPlace = Places[0];
+        Day.Place = selectedPlace;
         populateList();
-
         InitializeComponent();
         refreshCollectionView();
+        PlacesListView.SelectedItem = selectedPlace;
     }
 
     private void populateList()
     {
         Days = [];
         var root = Day.GetApiData();
+     
         for (var i = 0; i < 7; i++)
         {
-            Days.Add(new Day(root,i));
+            Days.Add(new Day(root,i,selectedPlace));
         }
     }
 
@@ -53,23 +59,62 @@ public partial class MainPage : ContentPage
     {
         var latitude = LatitudeEntry.Text.Replace('.', ',');
         var longitude = LongitudeEntry.Text.Replace('.', ',');
+        var name = NameEntry.Text;
         if (!double.TryParse(latitude, out _) || !double.TryParse(longitude, out _))
         {
             DisplayAlert("Error", "Zadejte platnou šířku a délku", "Ok");
             return;
         }
+        if(string.IsNullOrEmpty(name))
+        {
+            DisplayAlert("Error", "Zadejte název místa", "Ok");
+            return;
+        }
 
-        Day.Latitude =  LatitudeEntry.Text.Replace(',','.');
-        Day.Longitude = LongitudeEntry.Text.Replace(',', '.'); 
+        latitude = latitude.Replace(',', '.');
+        longitude = longitude.Replace(',', '.');
 
+        Place place = new (name, latitude, longitude);
+
+        if (Places.Contains(place))
+        {
+            DisplayAlert("Error", "Místo už existuje", "Ok");
+            return;
+        }
+
+        Places.Add(place);
+        selectedPlace = place;
         populateList();
         refreshCollectionView();
     }
 
     private void refreshCollectionView()
     {
+        PlacesListView.ItemsSource = null;
+        PlacesListView.ItemsSource = Places;
+
         DayView.ItemsSource = null;
         DayView.ItemsSource = Days;
         DayView.SelectedItem = Days[0];
+
+        LongitudeEntry.Text = Day.Place.Longitude;
+        LatitudeEntry.Text = Day.Place.Latitude;
+    }
+
+    private void PlacesListView_OnItemSelected(object? sender, SelectedItemChangedEventArgs e)
+    {
+        var place = e.SelectedItem as Place;
+        if (place is null)
+        {
+            return;
+        }
+        selectedPlace = place;
+
+        LongitudeEntry.Text = place.Longitude;
+        LatitudeEntry.Text = place.Latitude;
+        NameEntry.Text = place.Name;
+
+        populateList();
+        refreshCollectionView();
     }
 }

@@ -14,6 +14,8 @@
             Grid.Column="0"
             Padding="15"
             Spacing="10">
+            <Label FontSize="20" Text="Název" />
+            <Entry x:Name="NameEntry" />
             <Label FontSize="20" Text="Zeměpisná šířka:" />
             <Entry x:Name="LatitudeEntry" Keyboard="Numeric" />
             <Label FontSize="20" Text="Zeměpisná délka:" />
@@ -23,6 +25,17 @@
                 Clicked="SubmitBtn_OnClicked"
                 Text="Zadat"
                 WidthRequest="100" />
+
+            <ListView
+                x:Name="PlacesListView"
+                ItemSelected="PlacesListView_OnItemSelected"
+                SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </VerticalStackLayout>
 
         <ScrollView Grid.Column="1">

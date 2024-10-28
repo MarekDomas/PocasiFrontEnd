@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -30,8 +31,9 @@ public class Day
         }
     }
 
-    public Day(Root rootData, int day)
+    public Day(Root rootData, int day,Place place)
     {
+        Place = place;
         Date = DateOnly.Parse(rootData.daily.time[day]);
         WeatherCode = rootData.daily.weather_code[day];
         IconPath = getIconPath(WeatherCode);
@@ -48,12 +50,10 @@ public class Day
         return "icon.png";
     }
 
-    public static string Latitude = "50.43340228879575";
-    public static string Longitude = "15.352385419059253";
-    
+    public static Place Place { get; set; }
     public static Root GetApiData()
     {
-        var apiUrl = $"https://api.open-meteo.com/v1/forecast?latitude={Latitude}&longitude={Longitude}&current=temperature_2m,is_day,rain,showers,snowfall,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin";
+        var apiUrl = $"https://api.open-meteo.com/v1/forecast?latitude={Place.Latitude}&longitude={Place.Longitude}&current=temperature_2m,is_day,rain,showers,snowfall,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin";
         using (var client = new HttpClient())
         {
             var response = client.GetAsync(apiUrl).Result;
