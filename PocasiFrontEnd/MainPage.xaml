@@ -14,18 +14,28 @@
             <VerticalStackLayout
                 Grid.Column="0"
                 Padding="15"
+                BackgroundColor="#141414"
                 Spacing="10">
-                <Label FontSize="20" Text="Název" />
+                <Label FontSize="20" Text="Název: " />
                 <Entry x:Name="NameEntry" />
                 <Label FontSize="20" Text="Zeměpisná šířka:" />
                 <Entry x:Name="LatitudeEntry" Keyboard="Numeric" />
                 <Label FontSize="20" Text="Zeměpisná délka:" />
                 <Entry x:Name="LongitudeEntry" Keyboard="Numeric" />
-                <Button
-                    x:Name="SubmitBtn"
-                    Clicked="SubmitBtn_OnClicked"
-                    Text="Zadat"
-                    WidthRequest="100" />
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                    <Button
+                        x:Name="SubmitBtn"
+                        Clicked="SubmitBtn_OnClicked"
+                        Text="Zadat"
+                        WidthRequest="100" />
+                    <Button
+                        x:Name="DeleteBtn"
+                        BackgroundColor="DarkRed"
+                        Clicked="DeleteBtn_OnClicked"
+                        IsEnabled="False"
+                        Text="Odebrat"
+                        WidthRequest="100" />
+                </HorizontalStackLayout>
 
                 <ListView
                     x:Name="PlacesListView"
@@ -35,6 +45,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <Label
+                                    Padding="5"
                                     FontAttributes="Bold"
                                     FontSize="18"
                                     HorizontalOptions="Start"

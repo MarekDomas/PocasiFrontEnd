@@ -106,8 +106,11 @@ public partial class MainPage : ContentPage
         var place = e.SelectedItem as Place;
         if (place is null)
         {
+
             return;
         }
+        DeleteBtn.IsEnabled = true;
+        DeleteBtn.TextColor = Colors.White;
         selectedPlace = place;
 
         LongitudeEntry.Text = place.Longitude;
@@ -116,5 +119,21 @@ public partial class MainPage : ContentPage
 
         populateList();
         refreshCollectionView();
+    }
+
+    private void DeleteBtn_OnClicked(object? sender, EventArgs e)
+    {
+        Place place = new(NameEntry.Text, LatitudeEntry.Text,LongitudeEntry.Text);
+        if (!Places.Contains(place)) return;
+        Places.Remove(place);
+
+        if (Places.Count != 0)
+        {
+            selectedPlace = Places[0];
+        }
+        populateList();
+        refreshCollectionView();
+        DeleteBtn.IsEnabled = false;
+        DeleteBtn.TextColor = Colors.Gray;
     }
 }
