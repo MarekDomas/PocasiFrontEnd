@@ -68,6 +68,7 @@
                 <CollectionView
                     x:Name="DayView"
                     Margin="0,50"
+                    BackgroundColor="#222222"
                     HorizontalOptions="Center"
                     ItemsLayout="HorizontalList"
                     SelectionChanged="DayView_OnSelectionChanged"
