@@ -68,7 +68,8 @@
                                     FontAttributes="Bold"
                                     FontSize="20"
                                     HorizontalOptions="Center"
-                                    Text="{Binding Date}" />
+                                    Text="{Binding Date, StringFormat='{0:dddd, dd/MM/yyyy}'}" />
+
                                 <Image
                                     HeightRequest="75"
                                     HorizontalOptions="Center"
