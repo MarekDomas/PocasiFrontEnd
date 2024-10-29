@@ -16,7 +16,8 @@ public partial class MainPage : ContentPage
         Day.Place = selectedPlace;
         populateList();
         InitializeComponent();
-        refreshCollectionView();
+        RefreshDayView();
+        RefreshPlacesView();
         PlacesListView.SelectedItem = selectedPlace;
     }
 
@@ -85,20 +86,25 @@ public partial class MainPage : ContentPage
         Places.Add(place);
         selectedPlace = place;
         populateList();
-        refreshCollectionView();
+        RefreshDayView();
+        RefreshPlacesView();
     }
 
-    private void refreshCollectionView()
+    private void RefreshDayView()
     {
-        PlacesListView.ItemsSource = null;
-        PlacesListView.ItemsSource = Places;
-
         DayView.ItemsSource = null;
         DayView.ItemsSource = Days;
         DayView.SelectedItem = Days[0];
 
         LongitudeEntry.Text = Day.Place.Longitude;
         LatitudeEntry.Text = Day.Place.Latitude;
+    }
+
+    private void RefreshPlacesView()
+    {
+        PlacesListView.ItemsSource = null;
+        PlacesListView.ItemsSource = Places;
+
     }
 
     private void PlacesListView_OnItemSelected(object? sender, SelectedItemChangedEventArgs e)
@@ -118,7 +124,7 @@ public partial class MainPage : ContentPage
         NameEntry.Text = place.Name;
 
         populateList();
-        refreshCollectionView();
+        RefreshDayView();
     }
 
     private void DeleteBtn_OnClicked(object? sender, EventArgs e)
@@ -130,10 +136,10 @@ public partial class MainPage : ContentPage
         if (Places.Count != 0)
         {
             selectedPlace = Places[0];
+            PlacesListView.SelectedItem = selectedPlace;
         }
         populateList();
-        refreshCollectionView();
-        DeleteBtn.IsEnabled = false;
-        DeleteBtn.TextColor = Colors.Gray;
+        RefreshDayView();
+        RefreshPlacesView();
     }
 }
